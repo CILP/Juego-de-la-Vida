@@ -19,10 +19,12 @@ Render.prototype.dibujarCuadricula = function(nombreCanvas, elemento){
     type: 'cuadricula',
     color: '#CF1',
     tamano: 32,
-    xi: 0,
-    xf: 640,
-    yi: 0,
-    yf: 480
+    area: {
+      xi: 0,
+      xf: 640,
+      yi: 0,
+      yf: 480
+    }
   };
   */
   var canvas = this.canvasVirtual();
@@ -50,7 +52,7 @@ Render.prototype.dibujarCuadricula = function(nombreCanvas, elemento){
 
   // Renderizamos en elemento canvas destino
   var destino = document.getElementById(nombreCanvas).getContext('2d');
-  destino.drawImage(canvas, elemento.xi, elemento.yi);
+  destino.drawImage(canvas, 0, 0);
 
   // Evitamos referencias circulares
   destino = null;
@@ -58,21 +60,52 @@ Render.prototype.dibujarCuadricula = function(nombreCanvas, elemento){
 };
 
 /**
- * Metodo que permite dibujar el relleno de un canvas (Fondo de color plano)
- * @method Render.dibujarRelleno()
- * @param {string} nombreCanvas - Nombre o identificador del canvas en el que se desea dibujar.
- * @param {bool} plano - Relleno plano o relleno de rectangulos
- * @param {object} elemento - Elemento a dibujar
- */
-Render.prototype.dibujarRelleno = function(nombreCanvas, plano, elemento){};
-
-/**
  * Metodo que permite dibujar un rectangulo en un canvas
  * @method Render.dibujarRectangulo()
  * @param {string} nombreCanvas - Nombre o identificador del canvas en el que se desea dibujar.
  * @param {object} elemento - Elemento a dibujar
  */
-Render.prototype.dibujarRectangulo = function(nombreCanvas, elemento){};
+Render.prototype.dibujarRectangulo = function(nombreCanvas, elemento){
+
+  elemento = {
+    tipo: 'rectangulo',
+    propiedades: {
+      tamano: 32,
+      color: '#F2E',
+      puntoOrigen: {
+        x: 32,
+        y: 32
+      },
+      puntoDestino: {
+        x: 128,
+        y: 128
+      }
+    }
+  };
+
+  var canvas = this.canvasVirtual();
+
+  canvas.width = elemento.propiedades.puntoDestino.x;
+  canvas.height = elemento.propiedades.puntoDestino.y;
+
+  var contexto = canvas.getContext('2d');
+
+  contexto.fillStyle = elemento.propiedades.color;
+  contexto.fillRect(elemento.propiedades.puntoOrigen.x,
+    elemento.propiedades.puntoOrigen.y,
+    elemento.propiedades.puntoDestino.x,
+    elemento.propiedades.puntoDestino.y
+  );
+
+  // Renderizamos en elemento canvas destino
+  var destino = document.getElementById(nombreCanvas).getContext('2d');
+  destino.drawImage(canvas, 0, 0);
+
+  // Evitamos referencias circulares
+  destino = null;
+  canvas = contexto = null;
+
+};
 
 /**
  * Metodo que permite dibujar una linea en un canvas

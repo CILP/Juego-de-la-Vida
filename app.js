@@ -16,7 +16,8 @@ window.addEventListener('load', function(){
   fondo.contexto.fillStyle = "#000";
   fondo.contexto.fillRect(0, 0, fondo.ancho, fondo.alto);*/
 
-  renderizer = new Render().dibujarCuadricula('frente', {
+  renderizer = new Render();
+  renderizer.dibujarCuadricula('frente', {
     type: 'cuadricula',
     color: '#C02',
     tamano: 8,
