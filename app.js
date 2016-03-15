@@ -8,23 +8,21 @@ function repaint(){
 }
 
 window.addEventListener('load', function(){
-  // Se inican las capas
-  /*fondo = new Mapa(document.getElementById('fondo'), '2d', null, 8);
-  frente = new Mapa(document.getElementById('frente'), '2d', null, 8);
-
-  frente.dibujarCuadricula();
-  fondo.contexto.fillStyle = "#000";
-  fondo.contexto.fillRect(0, 0, fondo.ancho, fondo.alto);*/
-
-  renderizer = new Render();
-  renderizer.dibujarCuadricula('frente', {
-    type: 'cuadricula',
-    color: '#C02',
-    tamano: 8,
-    xi: 0,
-    xf: 640,
-    yi: 0,
-    yf: 480
+  renderizer = new Render()
+    .dibujarCuadricula('frente', {
+    tipo: 'cuadricula',
+    propiedades: {
+      tamano: 8,
+      color: '#F2E',
+      puntoOrigen: {
+        x: 32,
+        y: 32
+      },
+      puntoDestino: {
+        x: 322,
+        y: 322
+      }
+    }
   });
 
   repaint();
